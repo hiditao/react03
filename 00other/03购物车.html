@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #333;
+            border-collapse: collapse;
+        }
+
+        table {
+            width: 1200px;
+            margin: 50px auto 0;
+            text-align: center;
+
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+
+        tbody tr td:first-of-type {
+            width: 90px;
+        }
+
+        tbody tr td:nth-of-type(2) {
+            width: 100px;
+        }
+
+        tbody tr td:nth-of-type(3) {
+            width: 350px;
+        }
+
+        tbody tr td:nth-of-type(4) {
+            width: 200px;
+        }
+
+        tbody tr td:nth-of-type(5) {
+            width: 100px;
+        }
+
+        tbody tr td:nth-of-type(6) {
+            width: 200px;
+        }
+
+        tbody tr td:nth-of-type(7) {
+            width: 80px;
+        }
+
+        tbody tr td:nth-of-type(8) {
+            width: 80px;
+        }
+
+        button {
+            width: 50px;
+        }
+
+        input[type="text"] {
+            width: 60px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="selectall"> 全选
+                </th>
+                <th></th>
+                <th>商品名称</th>
+                <th>商品描述</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>小计</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+
+        <h1>总价： </h1>
+
+
+        <script>
+            let goodlist = [
+                {
+                    id: 1,
+                    pic: "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3766018191,91147913&fm=26&gp=0.jpg",
+                    name: "斯纳恩（Snaen)大颗粒积木拼装套装小孩儿童玩具男孩女孩早教玩具拼插滑道抖音3-6岁165颗粒",
+                    description: "165粒小颗粒滑道+1底板【盒装】",
+                    price: 29.9,
+                    num: 3
+                },
+                {
+                    id: 2,
+                    pic: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2960593836,895105738&fm=26&gp=0.jpg",
+                    name: "斯纳恩（Snaen)大颗粒积木拼装套装小孩儿童玩具男孩女孩早教玩具拼插滑道抖音3-6岁165颗粒",
+                    description: "165粒小颗粒滑道+1底板【盒装】",
+                    price: 52.9,
+                    num: 1
+                },
+                {
+                    id: 3,
+                    pic: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2024119043,4103909044&fm=26&gp=0.jpg",
+                    name: "斯纳恩（Snaen)大颗粒积木拼装套装小孩儿童玩具男孩女孩早教玩具拼插滑道抖音3-6岁165颗粒",
+                    description: "165粒小颗粒滑道+1底板【盒装】",
+                    price: 355,
+                    num: 1
+                },
+                {
+                    id: 4,
+                    pic: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=565857319,1919828643&fm=26&gp=0.jpg",
+                    name: "子初 洗衣液 婴儿洗衣液  金盏花亮白去污洗衣液超值套装9斤（1.5L*3瓶）宝宝儿童成人洗衣液 母婴可用",
+                    description: "165粒小颗粒滑道+1底板【盒装】",
+                    price: 59.9,
+                    num: 2
+                }
+            ]
+
+            function findIndex(node) { //node表示tr
+                let index = -1;
+                let children = node.parentNode.children;  //表示tbody内的所有tr
+                for (let i = 0; i < children.length; i++) {
+                    if (node == children[i]) {
+                        index = i;
+                        break;
+                    } else {
+                        index = -1;
+                    }
+                }
+
+                return index;
+            }
+
+            // 创建节点并显示
+            (function () {
+
+
+                for (let i = 0; i < goodlist.length; i++) {
+                    let tr = document.createElement("tr");
+                    let select = document.createElement("td");
+                    let selectinput = document.createElement("input");
+                    selectinput.type = "checkbox";
+                    selectinput.className = "single";
+                    select.appendChild(selectinput);
+                    tr.appendChild(select);
+
+                    for (let key in goodlist[i]) {
+
+                        if (key == "pic") {
+                            let td = document.createElement("td");
+                            let img = document.createElement("img");
+                            img.src = goodlist[i].pic;
+                            td.appendChild(img);
+                            tr.appendChild(td);
+                        } else if (key == "name") {
+                            let td = document.createElement("td");
+                            let a = document.createElement("a");
+                            a.href = "#";
+                            a.innerHTML = goodlist[i].name;
+                            td.appendChild(a);
+                            tr.appendChild(td);
+                        } else if (key == "description" || key == "price") {
+                            let td = document.createElement("td");
+                            let p = document.createElement("p");
+                            p.innerHTML = goodlist[i][key];
+                            td.appendChild(p);
+                            tr.appendChild(td);
+                        } else if (key == "num") {
+                            let td = document.createElement("td");
+
+                            let subBtn = document.createElement("button");
+                            subBtn.innerHTML = "-";
+                            // if(goodlist[i].num == 1) {
+                            //     subBtn.disabled = "true";
+                            // }
+                            subBtn.disabled = goodlist[i].num == 1 ? true : false;
+                            td.appendChild(subBtn);
+
+                            let input = document.createElement("input");
+                            input.value = goodlist[i][key];
+                            input.type = "text";
+                            td.appendChild(input);
+
+                            let addBtn = document.createElement("button");
+                            addBtn.innerHTML = "+";
+                            td.appendChild(addBtn);
+
+                            tr.appendChild(td);
+                        }
+
+
+                    }
+                    let total = document.createElement("td");
+                    let p = document.createElement("p");
+                    p.innerHTML = (goodlist[i].price * goodlist[i].num).toFixed(2);
+                    total.appendChild(p);
+                    tr.appendChild(total);
+
+                    let operate = document.createElement("td");
+                    let delBtn = document.createElement("button");
+                    delBtn.innerHTML = "删除";
+                    operate.appendChild(delBtn);
+                    tr.appendChild(operate);
+
+                    document.getElementsByTagName("tbody")[0].appendChild(tr);
+                }
+
+
+            })();
+
+
+
+            let table = document.querySelector("table");
+
+            // 设置事件监听：采用事件委托机制
+            (function () {
+                table.addEventListener("click", function (event) {
+                    event = event || window.event;
+
+                    let type = event.target.innerHTML;
+                    if (type == "-") {
+                        // 获取当前按钮的父元素tr在tbody中的下标
+                        let index = findIndex(event.target.parentNode.parentNode);
+
+                        // 判断是否还可以再减数量
+                        if (goodlist[index].num < 2) {
+                            return; //结束函数执行
+                        }
+                        // 修改数组中的商品数量
+                        goodlist[index].num--;
+
+                        // 修改input中的显示数据
+                        event.target.nextElementSibling.value = goodlist[index].num;
+
+                        // 修改小计
+                        event.target.parentNode.nextElementSibling.firstElementChild.innerHTML = (goodlist[index].num * goodlist[index].price).toFixed(2);
+
+                        // 判断是否禁用此按钮
+                        if (goodlist[index].num == 1) {
+                            event.target.disabled = true;
+                        }
+                    } else if (type == "+") {
+                        // 获取当前按钮的父元素tr在tbody中的下标
+                        let index = findIndex(event.target.parentNode.parentNode);
+
+                        // 修改数组中商品的数量
+                        goodlist[index].num++;
+
+                        // 修改输入框中的数据
+                        event.target.previousElementSibling.value = goodlist[index].num;
+
+                        // 修改小计
+                        event.target.parentNode.nextElementSibling.firstElementChild.innerHTML = (goodlist[index].price * goodlist[index].num).toFixed(2);
+
+                        // 判断减号按钮是否可用
+                        if (goodlist[index].num > 1) {
+                            // event.target.previousElementSibling.previousElementSibling.removeAttribute("disabled");
+                            event.target.previousElementSibling.previousElementSibling.disabled = false;
+                        }
+
+                    } else if (type == "删除") {
+                        // 获取当前按钮的父元素tr在tbody中的下标
+                        let index = findIndex(event.target.parentNode.parentNode);
+
+                        // 删除数组元素
+                        goodlist.splice(index, 1);
+
+                        // 删除节点
+                        event.target.parentNode.parentNode.remove();
+                    }
+                    
+                    calculate();
+                })
+            })();
+
+            // 全选和反选操作
+            (function () {
+                let selectAll = document.querySelector("#selectall");
+                let single = document.querySelectorAll(".single");
+
+                selectAll.addEventListener("click", function () {
+                    // 全选时，将此状态赋值给每一个子选项
+                    for (let i = 0; i < single.length; i++) {
+                        single[i].checked = selectAll.checked;
+                    }
+                    // calculate()
+                });
+
+
+                for (let i = 0; i < single.length; i++) {
+                    single[i].addEventListener("click", function(event) {
+                        // 每一个子选项选中，判断其他选项是否都选中，如果都选中，那么全选赋值为true，只要有一个子项没有选中，那么全选按钮都为false
+                        let flag = true;
+                        for (let i = 0; i < single.length; i++) {
+                            if (!single[i].checked) { //只要有一个子项没有选中
+                                flag = false;
+                                break; //提高执行效率
+                            }
+                        }
+                        selectAll.checked = flag;
+
+                        // calculate();
+                    })
+                };
+                
+            })();
+
+            // 计算总价
+            function calculate() {
+                let h1 = document.querySelector("h1");
+                let single = document.querySelectorAll(".single");
+
+                let totalPrice = 0;
+                for(let i = 0; i < single.length; i++) {
+                    if(single[i].checked) { //被选中的tr
+                        totalPrice += (goodlist[i].num*goodlist[i].price);
+                    }
+                }
+
+                h1.innerHTML = "总价:" + totalPrice.toFixed(2);
+            }
+        </script>
+    </table>
+
+</body>
+
+</html>

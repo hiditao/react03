@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let str = "hello";
+        let a = [1,2,3];
+        let b = {num: 100};
+        let c = null;
+
+        console.log(typeof a, typeof b, typeof c); //object
+        console.log(str[0]); //"h"
+
+        // instanceof判断某个变量是否是某个类的子类或实例对象
+        console.log(a instanceof Array); //true
+        console.log(Array.isArray(a)); //true
+
+
+        class Animal {
+
+        }
+
+        class People extends Animal {
+
+        }
+        let p = new People();
+        console.log(p instanceof Animal); //true
+        console.log(p instanceof People); //true
+
+        let animal = new Animal();
+        console.log(animal instanceof People); //false
+
+    </script>
+</body>
+</html>
